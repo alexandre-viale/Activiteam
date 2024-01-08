@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1025673016567",
+    "project_id": "tp2-dev-mobile",
+    "storage_bucket": "tp2-dev-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025673016567:android:f05ce4dced2799da1a0ff2",
+        "android_client_info": {
+          "package_name": "com.example.tp2_dev_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmnv2D6q-6TmvkPZuNuj51t5vrsa77BqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
