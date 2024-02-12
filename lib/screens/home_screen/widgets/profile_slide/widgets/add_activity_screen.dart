@@ -64,7 +64,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 150),
           child: Form(
             key: _formKey,
             autovalidateMode: _hasTriedValidating
@@ -191,15 +191,23 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: !_isLoading ? () => addActivity(context) : null,
-                  child: const Text('Ajouter l\'activité'),
-                ),
               ],
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => addActivity(context),
+        icon: const Icon(Icons.add),
+        label: _isLoading
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              )
+            : const Text('Ajouter l\'activité'),
       ),
     );
   }

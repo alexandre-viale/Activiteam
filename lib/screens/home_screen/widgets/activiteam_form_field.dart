@@ -13,7 +13,6 @@ class ActiviteamFormField extends StatelessWidget {
   final TextCapitalization _textCapitalization;
   final String? Function(String?)? _validator;
   final Function(String?)? _onchanged;
-  final FocusNode? _focusNode;
   final bool _readOnly;
 
   const ActiviteamFormField({
@@ -30,7 +29,6 @@ class ActiviteamFormField extends StatelessWidget {
     bool obscureText = false,
     Function(String?)? onChanged,
     TextCapitalization textCapitalization = TextCapitalization.none,
-    FocusNode? focusNode,
     bool readOnly = false,
   })  : _controller = controller,
         _labelText = labelText,
@@ -44,7 +42,6 @@ class ActiviteamFormField extends StatelessWidget {
         _obscureText = obscureText,
         _textCapitalization = textCapitalization,
         _onchanged = onChanged,
-        _focusNode = focusNode,
         _readOnly = readOnly,
         super(key: key);
 
@@ -52,7 +49,6 @@ class ActiviteamFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       readOnly: _readOnly,
-      focusNode: _focusNode,
       validator: _validator,
       controller: _controller,
       textInputAction: _textInputAction,
