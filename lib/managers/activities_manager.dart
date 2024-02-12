@@ -15,13 +15,13 @@ class ActivitiesManager {
     ActivitiesRepository.addToCart(
       activity,
     );
-    Provider.of<CartNotifier>(context, listen: false).addItem(activity.id);
+    Provider.of<CartNotifier>(context, listen: false).addItem(activity.id!);
   }
 
   static removeOneFromCart(Activity activity, BuildContext context) async {
     ActivitiesRepository.removeOneFromCart(
       activity,
     );
-    Provider.of<CartNotifier>(context, listen: false).removeItem(activity.id);
+    Provider.of<CartNotifier>(context, listen: false).removeItem(activity.id!);
   }
 }

@@ -1,15 +1,15 @@
-import 'package:tp2_dev_mobile/enums/category.dart';
+import 'package:tp2_dev_mobile/enums/activities_category.dart';
 
 class Activity {
-  String id;
-  Category category;
+  String? id;
+  ActivitiesCategory category;
   String title;
   String place;
   int minimumPeople;
   double price;
   String? imageLink;
   Activity({
-    required this.id,
+    this.id,
     required this.category,
     required this.title,
     required this.place,
@@ -22,7 +22,7 @@ class Activity {
     return Activity(
       id: documentId,
       title: map['title'],
-      category: Category.fromString(map['category'])!,
+      category: ActivitiesCategory.fromString(map['category'])!,
       place: map['place'],
       minimumPeople: map['minimumPeople'],
       price: map['price'].toDouble(),

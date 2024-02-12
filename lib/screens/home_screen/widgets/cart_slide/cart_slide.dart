@@ -184,7 +184,8 @@ class _CartSlideState extends State<CartSlide> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text(
-                      'Fonctionnalité non implémentée, ce bouton n\'est présent que pour des raisons esthétiques'),
+                    'Fonctionnalité non implémentée, ce bouton n\'est présent que pour des raisons esthétiques',
+                  ),
                 ),
               );
             },

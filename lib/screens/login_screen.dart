@@ -28,101 +28,104 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text('ActiviTeam'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Form(
-            key: _formKey,
-            autovalidateMode: _hasTriedToSubmit
-                ? AutovalidateMode.always
-                : AutovalidateMode.disabled,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: ActiviteamFormField(
-                    controller: _emailController,
-                    labelText: 'Email',
-                    hintText: 'Entrez votre email',
-                    prefixIcon: Icons.email,
-                    validator: validateEmail,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: ActiviteamFormField(
-                    controller: _passwordController,
-                    labelText: 'Mot de passe',
-                    hintText: 'Entrez votre mot de passe',
-                    prefixIcon: Icons.lock,
-                    suffixIcon: IconButton(
-                        icon: Icon(_isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                        color: Theme.of(context).primaryColor,
-                        onPressed: () {
-                          setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
-                          });
-                        }),
-                    validator: validatePassword,
-                    obscureText: !_isPasswordVisible,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    minimumSize:
-                        Size(MediaQuery.of(context).size.width - 32, 50),
-                  ),
-                  onPressed: _isLoading ? null : handleSignIn,
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Se connecter'),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 15),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[200],
-                    disabledBackgroundColor: Colors.grey[200],
-                    disabledForegroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    minimumSize:
-                        Size(MediaQuery.of(context).size.width - 32, 50),
-                  ),
-                  onPressed: _isLoading
-                      ? null
-                      : () {
-                          Navigator.pushReplacementNamed(context, '/register');
-                        },
-                  child: Text(
-                    'Pas encore de compte ?',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: Colors.black,
-                        ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                TextButton(
-                  onPressed: _isLoading ? null : () {},
-                  child: const Text('Mot de passe oublié ?'),
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              height: 300,
             ),
-          ),
-        ],
+            const SizedBox(height: 20),
+            Form(
+              key: _formKey,
+              autovalidateMode: _hasTriedToSubmit
+                  ? AutovalidateMode.always
+                  : AutovalidateMode.disabled,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: ActiviteamFormField(
+                      controller: _emailController,
+                      labelText: 'Email',
+                      hintText: 'Entrez votre email',
+                      prefixIcon: Icons.email,
+                      validator: validateEmail,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: ActiviteamFormField(
+                      controller: _passwordController,
+                      labelText: 'Mot de passe',
+                      hintText: 'Entrez votre mot de passe',
+                      prefixIcon: Icons.lock,
+                      suffixIcon: IconButton(
+                          icon: Icon(_isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          }),
+                      validator: validatePassword,
+                      obscureText: !_isPasswordVisible,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      textStyle: Theme.of(context).textTheme.labelLarge,
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 32, 50),
+                    ),
+                    onPressed: _isLoading ? null : handleSignIn,
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Se connecter'),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[200],
+                      disabledBackgroundColor: Colors.grey[200],
+                      disabledForegroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 32, 50),
+                    ),
+                    onPressed: _isLoading
+                        ? null
+                        : () {
+                            Navigator.pushReplacementNamed(
+                                context, '/register');
+                          },
+                    child: Text(
+                      'Pas encore de compte ?',
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: Colors.black,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

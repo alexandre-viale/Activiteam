@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tp2_dev_mobile/model/activiteam_user.dart';
+import 'package:tp2_dev_mobile/repositories/user_repository.dart';
 import 'package:tp2_dev_mobile/screens/home_screen/widgets/activiteam_form_field.dart';
 import 'package:tp2_dev_mobile/utils/regexp.dart';
 
@@ -26,126 +28,133 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: AppBar(
         title: const Text('Créer un compte'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 20),
-          Form(
-            key: _formKey,
-            autovalidateMode: _hasAttemptedSignUp
-                ? AutovalidateMode.onUserInteraction
-                : AutovalidateMode.disabled,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: ActiviteamFormField(
-                    controller: _emailController,
-                    hintText: 'Entrez votre email',
-                    labelText: 'Email',
-                    prefixIcon: Icons.email,
-                    validator: validateEmail,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: ActiviteamFormField(
-                      controller: _passwordController,
-                      hintText: 'Entrez votre mot de passe',
-                      labelText: 'Mot de passe',
-                      prefixIcon: Icons.lock,
-                      validator: validatePassword,
-                      obscureText: _obscurePassword,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.visiblePassword,
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        color: Theme.of(context).primaryColor,
-                      )),
-                ),
-                const SizedBox(height: 20),
-                Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              height: 300,
+            ),
+            const SizedBox(height: 20),
+            Form(
+              key: _formKey,
+              autovalidateMode: _hasAttemptedSignUp
+                  ? AutovalidateMode.onUserInteraction
+                  : AutovalidateMode.disabled,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: ActiviteamFormField(
-                      controller: _confirmPasswordController,
-                      hintText: 'Confirmez le mot de passe',
-                      labelText: 'Confirmation du mot de passe',
-                      prefixIcon: Icons.lock,
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _obscureConfirmPassword = !_obscureConfirmPassword;
-                          });
-                        },
-                        icon: Icon(
-                          _obscureConfirmPassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                      controller: _emailController,
+                      hintText: 'Entrez votre email',
+                      labelText: 'Email',
+                      prefixIcon: Icons.email,
+                      validator: validateEmail,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: ActiviteamFormField(
+                        controller: _passwordController,
+                        hintText: 'Entrez votre mot de passe',
+                        labelText: 'Mot de passe',
+                        prefixIcon: Icons.lock,
+                        validator: validatePassword,
+                        obscureText: _obscurePassword,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.visiblePassword,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          color: Theme.of(context).primaryColor,
+                        )),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: ActiviteamFormField(
+                        controller: _confirmPasswordController,
+                        hintText: 'Confirmez le mot de passe',
+                        labelText: 'Confirmation du mot de passe',
+                        prefixIcon: Icons.lock,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword;
+                            });
+                          },
+                          icon: Icon(
+                            _obscureConfirmPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context).primaryColor,
+                          ),
                           color: Theme.of(context).primaryColor,
                         ),
-                        color: Theme.of(context).primaryColor,
+                        validator: validateConfirmPassword,
+                        obscureText: _obscureConfirmPassword,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.visiblePassword,
+                      )),
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
                       ),
-                      validator: validateConfirmPassword,
-                      obscureText: _obscureConfirmPassword,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.visiblePassword,
-                    )),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                      textStyle: Theme.of(context).textTheme.labelLarge,
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 32, 50),
                     ),
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                    minimumSize:
-                        Size(MediaQuery.of(context).size.width - 32, 50),
-                  ),
-                  onPressed: _isLoading ? null : validateForm,
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Créer un compte'),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 15),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[200],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                    onPressed: _isLoading ? null : validateForm,
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Créer un compte'),
+                      ],
                     ),
-                    minimumSize:
-                        Size(MediaQuery.of(context).size.width - 32, 50),
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                  child: Text(
-                    'Vous avez déjà un compte ?',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: Colors.black,
-                        ),
+                  const SizedBox(height: 15),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[200],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width - 32, 50),
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/login');
+                    },
+                    child: Text(
+                      'Vous avez déjà un compte ?',
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: Colors.black,
+                          ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 15),
-              ],
+                  const SizedBox(height: 15),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -192,8 +201,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     bool result = await registerWithEmailAndPassword();
     if (mounted && result) {
-      Navigator.pushReplacementNamed(context, '/home');
-    } else {}
+      UserRepository.createUser(ActiviTeamUser(
+        id: FirebaseAuth.instance.currentUser!.uid,
+        login: _emailController.text,
+      )).then((value) {
+        if (value) {
+          Navigator.pushReplacementNamed(context, '/home');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Une erreur est survenue lors de la création de votre compte',
+              ),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      });
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Une erreur est survenue lors de la création de votre compte',
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   void trimTextFields() {

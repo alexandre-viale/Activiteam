@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:tp2_dev_mobile/enums/category.dart';
+import 'package:tp2_dev_mobile/enums/activities_category.dart';
 import 'package:tp2_dev_mobile/model/activity.dart';
 import 'package:tp2_dev_mobile/providers/activities_notifier.dart';
-import 'package:tp2_dev_mobile/screens/activities_slide/widgets/activity_details_page.dart';
+import 'package:tp2_dev_mobile/screens/home_screen/widgets/activities_slide/widgets/activity_details_page.dart';
 
 class ActivitiesSlide extends StatefulWidget {
   const ActivitiesSlide({super.key});
@@ -24,7 +24,7 @@ class _ActivitiesSlideState extends State<ActivitiesSlide> {
               10,
               (index) => Activity(
                     id: 'Loading',
-                    category: Category.sport,
+                    category: ActivitiesCategory.sport,
                     minimumPeople: 1,
                     title: 'Loading',
                     imageLink: null,

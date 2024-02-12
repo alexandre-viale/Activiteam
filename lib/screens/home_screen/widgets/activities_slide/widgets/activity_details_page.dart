@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tp2_dev_mobile/managers/activities_manager.dart';
 import 'package:tp2_dev_mobile/model/activity.dart';
+import 'package:tp2_dev_mobile/utils/capitalize.dart';
 
 class ActivityDetailsPage extends StatelessWidget {
   final Activity activity;
@@ -38,7 +39,7 @@ class ActivityDetailsPage extends StatelessWidget {
               child: Image.network(activity.imageLink ?? "", fit: BoxFit.cover),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -56,7 +57,18 @@ class ActivityDetailsPage extends StatelessWidget {
                       const Icon(Icons.location_on),
                       const SizedBox(width: 8),
                       Text(
-                        '${activity.place} - ${activity.category.value}',
+                        activity.place,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Icon(Icons.category),
+                      const SizedBox(width: 8),
+                      Text(
+                        capitalize(activity.category.value),
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],

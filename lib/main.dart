@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:tp2_dev_mobile/firebase_options.dart';
 import 'package:tp2_dev_mobile/providers/activities_notifier.dart';
 import 'package:tp2_dev_mobile/providers/cart_notifier.dart';
+import 'package:tp2_dev_mobile/providers/activiteam_user_notifier.dart';
 import 'package:tp2_dev_mobile/screens/home_screen/home_screen.dart';
 import 'package:tp2_dev_mobile/screens/login_screen.dart';
 import 'package:tp2_dev_mobile/screens/register_screen.dart';
@@ -32,6 +33,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => CartNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ActiviteamUserNotifier(),
         )
       ],
       child: const ActiviTeam(),

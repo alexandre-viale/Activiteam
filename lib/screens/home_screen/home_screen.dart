@@ -1,13 +1,17 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tp2_dev_mobile/animations/smooth_transition_text.dart';
 import 'package:tp2_dev_mobile/managers/activities_manager.dart';
+import 'package:tp2_dev_mobile/providers/activiteam_user_notifier.dart';
 import 'package:tp2_dev_mobile/providers/activities_notifier.dart';
 import 'package:tp2_dev_mobile/providers/cart_notifier.dart';
-import 'package:tp2_dev_mobile/screens/activities_slide/activities_slide.dart';
-import 'package:tp2_dev_mobile/screens/cart_slide/cart_slide.dart';
+import 'package:tp2_dev_mobile/repositories/user_repository.dart';
+import 'package:tp2_dev_mobile/screens/home_screen/widgets/activities_slide/activities_slide.dart';
+import 'package:tp2_dev_mobile/screens/home_screen/widgets/cart_slide/cart_slide.dart';
 import 'package:tp2_dev_mobile/screens/home_screen/widgets/activiteam_drawer.dart';
+import 'package:tp2_dev_mobile/screens/home_screen/widgets/profile_slide/profile_slide.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,15 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _pageController = PageController();
-    Future.microtask(() {
-      final activitiesNotifier =
-          Provider.of<ActivitiesNotifier>(context, listen: false);
-      final cartNotifier = Provider.of<CartNotifier>(context, listen: false);
-      ActivitiesManager.fetchActivities(activitiesNotifier);
-      cartNotifier.fetchCartItems();
-    });
     super.initState();
+    _pageController = PageController();
+    // On récupère les activités, le panier et les données supplémentaires de l'utilisateur au chargement de l'application
+    // car c'est une application avec scroll horizontal, et on ne veut pas avoir de stuttering lors du changement de page.
+    // On les stocke dans des notifiers pour les réutiliser dans les différents widgets et avoir une seule source de vérité
+    final activitiesNotifier =
+        Provider.of<ActivitiesNotifier>(context, listen: false);
+    final cartNotifier = Provider.of<CartNotifier>(context, listen: false);
+    ActivitiesManager.fetchActivities(activitiesNotifier);
+    cartNotifier.fetchCartItems();
   }
 
   @override
@@ -93,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   key: pageKeys[2],
                   color: Colors.transparent,
-                  child: Container(),
+                  child: const ProfileSlide(),
                 ),
               ],
             ),

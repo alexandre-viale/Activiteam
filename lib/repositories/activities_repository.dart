@@ -13,6 +13,14 @@ class ActivitiesRepository {
     }).toList();
   }
 
+  static Future<Activity> createActivity(Activity activity) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference activities = firestore.collection('activities');
+    DocumentReference docRef = await activities.add(activity.toMap());
+    DocumentSnapshot doc = await docRef.get();
+    return Activity.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+  }
+
   static Future<void> addToCart(Activity activity) async {
     User user = FirebaseAuth.instance.currentUser!;
     String userId = user.uid;
