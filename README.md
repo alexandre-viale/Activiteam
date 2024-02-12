@@ -29,7 +29,7 @@ Tous les points sont respectés.
 
 ## US#4 Le panier
 
-Tous les points son respectés.
+Tous les points sont respectés.
 
 ### Fonctionnalités supplémentaires
 
